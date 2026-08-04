@@ -153,6 +153,15 @@ After completing this project, you will understand:
 
 ---
 
+## Future Improvements
+
+- Add triggers for automatic inventory updates.
+- Expand the dataset with thousands of sample records.
+- Optimize queries for large-scale datasets.
+- Create stored functions for business analytics.
+
+---
+
 ## 👨‍💻 Author
 
 **Darshan A**
