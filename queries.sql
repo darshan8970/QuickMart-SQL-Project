@@ -130,3 +130,58 @@ JOIN products
     ON order_items.product_id = products.product_id
 GROUP BY order_items.order_id
 HAVING SUM(order_items.quantity * products.price) > 5000;
+
+-- ==========================================
+-- INNER JOIN
+-- ==========================================
+
+-- Display orders with customer names
+SELECT
+    orders.order_id,
+    customers.name,
+    orders.order_date
+FROM orders
+INNER JOIN customers
+    ON orders.customer_id = customers.customer_id;
+
+-- Display products ordered with quantity
+SELECT
+    order_items.order_id,
+    products.name,
+    order_items.quantity
+FROM order_items
+INNER JOIN products
+    ON order_items.product_id = products.product_id;
+
+-- ==========================================
+-- LEFT JOIN
+-- ==========================================
+
+-- Display all customers and their orders
+SELECT
+    customers.customer_id,
+    customers.name,
+    orders.order_id,
+    orders.order_date
+FROM customers
+LEFT JOIN orders
+    ON customers.customer_id = orders.customer_id;
+
+-- ==========================================
+-- MULTI-TABLE JOIN
+-- ==========================================
+
+-- Complete order details
+SELECT
+    orders.order_id,
+    customers.name AS customer_name,
+    products.name AS product_name,
+    order_items.quantity,
+    products.price
+FROM orders
+JOIN customers
+    ON orders.customer_id = customers.customer_id
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+JOIN products
+    ON order_items.product_id = products.product_id;
