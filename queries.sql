@@ -346,3 +346,69 @@ FROM customers;
 SELECT
     CONCAT(name, ' - ', city) AS customer_details
 FROM customers;
+
+-- ==========================================
+-- VIEW
+-- ==========================================
+
+CREATE VIEW order_summary AS
+
+SELECT
+    orders.order_id,
+    customers.name AS customer_name,
+    products.name AS product_name,
+    order_items.quantity,
+    products.price
+
+FROM orders
+
+JOIN customers
+    ON orders.customer_id = customers.customer_id
+
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+
+JOIN products
+    ON order_items.product_id = products.product_id;
+
+-- Display View
+SELECT *
+FROM order_summary;
+
+-- ==========================================
+-- INDEX
+-- ==========================================
+
+CREATE INDEX idx_city
+ON customers(city);
+
+-- ==========================================
+-- EXPLAIN
+-- ==========================================
+
+EXPLAIN
+
+SELECT *
+FROM customers
+WHERE city = 'Bengaluru';
+
+-- ==========================================
+-- STORED PROCEDURE
+-- ==========================================
+
+DELIMITER //
+
+CREATE PROCEDURE GetCustomerOrders(IN customerId INT)
+
+BEGIN
+
+    SELECT *
+    FROM orders
+    WHERE customer_id = customerId;
+
+END //
+
+DELIMITER ;
+
+-- Execute Stored Procedure
+CALL GetCustomerOrders(1);
