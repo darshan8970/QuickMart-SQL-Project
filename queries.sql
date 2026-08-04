@@ -185,3 +185,66 @@ JOIN order_items
     ON orders.order_id = order_items.order_id
 JOIN products
     ON order_items.product_id = products.product_id;
+
+
+-- ==========================================
+-- SUBQUERY
+-- ==========================================
+
+-- Customers whose spending is above average
+SELECT
+    customer_id,
+    SUM(order_items.quantity * products.price) AS total_spent
+FROM orders
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+JOIN products
+    ON order_items.product_id = products.product_id
+GROUP BY customer_id
+HAVING SUM(order_items.quantity * products.price) >
+(
+    SELECT
+        AVG(customer_total)
+    FROM
+    (
+        SELECT
+            customer_id,
+            SUM(order_items.quantity * products.price) AS customer_total
+        FROM orders
+        JOIN order_items
+            ON orders.order_id = order_items.order_id
+        JOIN products
+            ON order_items.product_id = products.product_id
+        GROUP BY customer_id
+    ) AS spending
+);
+
+-- ==========================================
+-- CASE STATEMENT
+-- ==========================================
+
+-- Categorize customers based on spending
+SELECT
+    orders.customer_id,
+
+    SUM(order_items.quantity * products.price) AS total_spent,
+
+    CASE
+        WHEN SUM(order_items.quantity * products.price) > 50000
+            THEN 'High Spender'
+
+        WHEN SUM(order_items.quantity * products.price) > 10000
+            THEN 'Medium Spender'
+
+        ELSE 'Low Spender'
+    END AS customer_type
+
+FROM orders
+
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+
+JOIN products
+    ON order_items.product_id = products.product_id
+
+GROUP BY orders.customer_id;
