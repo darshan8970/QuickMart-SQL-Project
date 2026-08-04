@@ -68,3 +68,65 @@ FROM products
 ORDER BY price DESC
 LIMIT 5;
 
+-- ==========================================
+-- AGGREGATE FUNCTIONS
+-- ==========================================
+
+-- Total number of customers
+SELECT COUNT(*) AS total_customers
+FROM customers;
+
+-- Total number of products
+SELECT COUNT(*) AS total_products
+FROM products;
+
+-- Average product price
+SELECT AVG(price) AS average_price
+FROM products;
+
+-- Most expensive product
+SELECT MAX(price) AS highest_price
+FROM products;
+
+-- Cheapest product
+SELECT MIN(price) AS lowest_price
+FROM products;
+
+-- Total value of all products
+SELECT SUM(price) AS total_product_value
+FROM products;
+
+-- ==========================================
+-- GROUP BY
+-- ==========================================
+
+-- Number of customers in each city
+SELECT
+    city,
+    COUNT(*) AS total_customers
+FROM customers
+GROUP BY city;
+
+-- Total sales for each order
+SELECT
+    order_items.order_id,
+    SUM(order_items.quantity * products.price) AS total_order_value
+FROM order_items
+JOIN products
+    ON order_items.product_id = products.product_id
+GROUP BY order_items.order_id
+ORDER BY total_order_value DESC;
+
+-- ==========================================
+-- HAVING
+-- ==========================================
+
+-- Orders having value greater than 5000
+SELECT
+    order_items.order_id,
+    SUM(order_items.quantity * products.price) AS total_order_value
+FROM order_items
+JOIN products
+    ON order_items.product_id = products.product_id
+GROUP BY order_items.order_id
+HAVING SUM(order_items.quantity * products.price) > 5000;
