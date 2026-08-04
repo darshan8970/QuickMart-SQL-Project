@@ -1,0 +1,13 @@
+# MySQL log files
+*.log
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# VS Code Settings
+.vscode/
+
+# Temporary Files
+*.tmp
+*.temp
