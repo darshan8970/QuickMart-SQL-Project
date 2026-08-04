@@ -248,3 +248,52 @@ JOIN products
     ON order_items.product_id = products.product_id
 
 GROUP BY orders.customer_id;
+
+-- ==========================================
+-- WINDOW FUNCTION - RANK()
+-- ==========================================
+
+-- Rank customers based on total spending
+SELECT
+    orders.customer_id,
+
+    SUM(order_items.quantity * products.price) AS total_spent,
+
+    RANK() OVER (
+        ORDER BY SUM(order_items.quantity * products.price) DESC
+    ) AS customer_rank
+
+FROM orders
+
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+
+JOIN products
+    ON order_items.product_id = products.product_id
+
+GROUP BY orders.customer_id;
+
+-- ==========================================
+-- RUNNING TOTAL
+-- ==========================================
+
+-- Running total of daily sales
+SELECT
+    orders.order_date,
+
+    SUM(order_items.quantity * products.price) AS daily_sales,
+
+    SUM(SUM(order_items.quantity * products.price))
+        OVER (
+            ORDER BY orders.order_date
+        ) AS running_total
+
+FROM orders
+
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+
+JOIN products
+    ON order_items.product_id = products.product_id
+
+GROUP BY orders.order_date;
