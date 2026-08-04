@@ -297,3 +297,52 @@ JOIN products
     ON order_items.product_id = products.product_id
 
 GROUP BY orders.order_date;
+
+-- ==========================================
+-- DATE FUNCTIONS
+-- ==========================================
+
+-- Monthly sales
+SELECT
+    DATE_FORMAT(orders.order_date, '%Y-%m') AS month,
+
+    SUM(order_items.quantity * products.price) AS monthly_sales
+
+FROM orders
+
+JOIN order_items
+    ON orders.order_id = order_items.order_id
+
+JOIN products
+    ON order_items.product_id = products.product_id
+
+GROUP BY DATE_FORMAT(orders.order_date, '%Y-%m')
+
+ORDER BY month;
+
+-- ==========================================
+-- STRING FUNCTIONS
+-- ==========================================
+
+-- Convert names to uppercase
+SELECT
+    name,
+    UPPER(name) AS upper_name
+FROM customers;
+
+-- Convert names to lowercase
+SELECT
+    name,
+    LOWER(name) AS lower_name
+FROM customers;
+
+-- Count characters in customer names
+SELECT
+    name,
+    LENGTH(name) AS total_characters
+FROM customers;
+
+-- Combine customer name and city
+SELECT
+    CONCAT(name, ' - ', city) AS customer_details
+FROM customers;
