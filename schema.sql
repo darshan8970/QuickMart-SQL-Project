@@ -44,9 +44,11 @@ CREATE TABLE orders (
         REFERENCES customers(customer_id)
 );
 
+
 -- ==========================================
 -- Order Items Table
 -- ==========================================
+
 
 CREATE TABLE order_items (
     item_id INT AUTO_INCREMENT PRIMARY KEY,
