@@ -9,6 +9,7 @@ CREATE DATABASE quickmart;
 -- Select Database
 USE quickmart;
 
+
 -- ==========================================
 -- Customers Table
 -- ==========================================
