@@ -4,6 +4,7 @@
 
 QuickMart SQL Project is a beginner-to-intermediate SQL project that simulates an online retail store database. The project demonstrates database design, SQL querying, joins, aggregate functions, subqueries, views, indexing, stored procedures, and window functions.
 
+
 This project was built to strengthen SQL concepts and showcase practical database skills.
 
 ---
