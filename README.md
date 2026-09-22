@@ -169,4 +169,5 @@ After completing this project, you will understand:
 
 AI & ML Student
 
+
 Learning SQL through real-world projects.
